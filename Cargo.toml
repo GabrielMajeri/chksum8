@@ -1,0 +1,6 @@
+[package]
+name = "chksum8"
+version = "0.1.0"
+authors = ["Gabriel Majeri <gabriel.majeri6@gmail.com>"]
+readme = "README.md"
+publish = false
