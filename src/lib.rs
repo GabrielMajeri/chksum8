@@ -1,12 +1,24 @@
+//! Sum all the bytes of a data structure or an array.
+//!
+//! A commonly used method to ensure the validity of data is to calculate
+//! the sum of all the bytes, and compare it to a known value.
+//!
+//! **Note**: if you need a way to ensure data integrity, use some better algorithm like CRC-32.
+//! This crate is only intended to be used with legacy APIs.
+
 #![no_std]
+
+#![deny(missing_docs)]
+#![cfg_attr(feature = "cargo-clippy", deny(clippy))]
 
 use core::{mem, slice};
 
-/// Sums all the bytes of a data structure using wrapping operations.
+/// Sums all the bytes of a data structure.
 pub fn checksum8<T>(data: &T) -> u8 {
-     let data = unsafe {
-       let ptr = mem::transmute(data);
-        let len = mem::size_of::<T>();
+    let ptr = data as *const _ as *const u8;
+    let len = mem::size_of::<T>();
+
+    let data = unsafe {
         slice::from_raw_parts(ptr, len)
     };
 
@@ -18,7 +30,6 @@ pub fn checksum8_raw(data: &[u8]) -> u8 {
     data.iter().fold(0, |a, &b| a.wrapping_add(b))
 }
 
-// TODO: write unit tests.
 #[cfg(test)]
 mod tests {
     use super::*;

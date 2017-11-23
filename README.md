@@ -1,9 +1,9 @@
 # 8-bit checksum calculator
-This crate provides only one function, used to calculate the 8-bit checksum of a data structure.
+This crate calculate the 8-bit checksum of a data structure, or of an array of bytes.
 
-It adds all the bytes of a given object, or of a slice of bytes.
+In other words, it adds up all the bytes, modulo 256.
 
-This code is actually used in many places (such as ACPI, SMBIOS, EDID).
+This code is actually used in many places in OS development (such as ACPI, SMBIOS, EDID).
 
 ## License
 This code is licensed with the Unlicense, i.e. it is in the public domain.
