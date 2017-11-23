@@ -14,19 +14,17 @@
 use core::{mem, slice};
 
 /// Sums all the bytes of a data structure.
-pub fn checksum8<T>(data: &T) -> u8 {
+pub fn sum<T>(data: &T) -> u8 {
     let ptr = data as *const _ as *const u8;
     let len = mem::size_of::<T>();
 
-    let data = unsafe {
-        slice::from_raw_parts(ptr, len)
-    };
+    let data = unsafe { slice::from_raw_parts(ptr, len) };
 
-    checksum8_raw(data)
+    sum_slice(data)
 }
 
-/// Sums all the bytes in an array, modulo 256.
-pub fn checksum8_raw(data: &[u8]) -> u8 {
+/// Sums all the bytes in an array.
+pub fn sum_slice(data: &[u8]) -> u8 {
     data.iter().fold(0, |a, &b| a.wrapping_add(b))
 }
 
@@ -40,20 +38,20 @@ mod tests {
 
         let simple = Simple(0xAA_00_BB_00, 0xAA_00_00_00);
 
-        assert_eq!(checksum8(&simple), 15);
+        assert_eq!(sum(&simple), 15);
     }
 
     #[test]
     fn array_sum() {
         let data: &[u8] = &[1, 0, 8, 24, 45, 192, 25, 253, 0];
 
-        assert_eq!(checksum8_raw(&data), 36);
+        assert_eq!(sum_slice(&data), 36);
     }
 
     #[test]
     fn zero_size_type() {
         struct Zero;
 
-        assert_eq!(checksum8(&Zero), 0);
+        assert_eq!(sum(&Zero), 0);
     }
 }
