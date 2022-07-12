@@ -45,7 +45,7 @@ mod tests {
     fn array_sum() {
         let data: &[u8] = &[1, 0, 8, 24, 45, 192, 25, 253, 0];
 
-        assert_eq!(sum_slice(&data), 36);
+        assert_eq!(sum_slice(data), 36);
     }
 
     #[test]
